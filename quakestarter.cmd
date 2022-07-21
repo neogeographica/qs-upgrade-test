@@ -102,6 +102,8 @@ set checkedupdate=true
 :checked
 
 echo.
+echo Hey this is a new version!
+echo.
 echo Basic setup:
 echo  1: Find ^& copy pak files ^(game data^) on this computer
 echo  2: Find soundtrack music files on this computer or download

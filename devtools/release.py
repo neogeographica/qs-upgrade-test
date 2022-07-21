@@ -23,7 +23,7 @@ DOC_SRC_PATH = os.path.join(SRC_PATH, "docsource")
 exec(open(os.path.join(DOC_SRC_PATH, "conf.py")).read())
 RELEASE = release
 
-RELEASE_URL = "https://github.com/neogeographica/quakestarter/releases/tag/v" + RELEASE
+RELEASE_URL = "https://github.com/neogeographica/qs-upgrade-test/releases/tag/v" + RELEASE
 
 RELEASE_FOLDER = "release." + str(os.getpid())
 QUAKE_FOLDER = os.path.join(RELEASE_FOLDER, "Quake")

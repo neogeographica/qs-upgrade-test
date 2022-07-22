@@ -95,9 +95,11 @@ if "%dl_choice%"=="N" goto :bailout
 set /p e_choice=Include Quake engines? ([y]/n):
 if "%e_choice%"=="n" goto :noengine
 if "%e_choice%"=="N" goto :noengine
+set manifest=quakestarter_scripts\manifest.txt
 set url=%version_current_download%
 goto :download
 :noengine
+set manifest=quakestarter_scripts\noengine-manifest.txt
 set url=%version_current_download:/quakestarter-=/quakestarter-noengine-%
 :download
 for %%a in (%url%) do (
@@ -145,10 +147,10 @@ if "%good_extraction%"=="false" (
   goto :err
 )
 echo ... making a backup ...
-if not exist "quakestarter_scripts\release_manifest.txt" (
+if not exist "%manifest%" (
   echo.
   echo Failed to make a backup; this manifest file is missing:
-  echo   %rootpath%quakestarter_scripts\release_manifest.txt
+  echo   %rootpath%%manifest%
   echo.
   echo Without a backup, auto-update will not proceed. Perhaps try a manual
   echo download from quakestarter.com?
@@ -161,7 +163,7 @@ md "%backupdir%"
 md "%backupdir%\id1"
 setlocal enabledelayedexpansion
 set good_backup=true
-for /f "tokens=*" %%f in (quakestarter_scripts\release_manifest.txt) do (
+for /f "tokens=*" %%f in (%manifest%) do (
   if exist "%%f\" (
     xcopy "%%f" "%backupdir%\%%f" /s /e /c /i /r /k /q > nul
   ) else (
@@ -193,6 +195,7 @@ echo set rootpath=%rootpath%>>quakestarter_update.cmd
 echo set destdir=%destdir%>>quakestarter_update.cmd
 echo set extractdir=%extractdir%>>quakestarter_update.cmd
 echo set backupdir=%backupdir%>>quakestarter_update.cmd
+echo set manifest=%manifest%>>quakestarter_update.cmd
 type "%scriptspath%update_kernel.txt">>quakestarter_update.cmd
 start /b /i cmd /c quakestarter_update.cmd & exit
 

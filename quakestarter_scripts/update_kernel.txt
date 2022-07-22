@@ -5,23 +5,28 @@ REM   rootpath
 REM   destdir
 REM   extractdir
 REM   backupdir
+REM   manifest
 
 set logfile=%destdir%\update.log
 
 cd "%rootpath%"
 
-REM best-effort deletion of current files; this may fail for at least the
-REM open manifest file, but we'll overwrite that anyway below
-for /f "tokens=*" %%f in (quakestarter_scripts\release_manifest.txt) do (
+REM best-effort deletion of current files
+echo "removing the following files from %rootpath%">"%logfile%"
+type "%manifest%">>"%logfile%"
+echo.>>"%logfile%"
+for /f "tokens=*" %%f in (%manifest%) do (
   if exist "%%f\" (
-    rd /q /s "%%f" >"%logfile%" 2>&1
+    rd /q /s "%%f" >>"%logfile%" 2>&1
   ) else (
-    del /f /q "%%f" >"%logfile%" 2>&1
+    del /f /q "%%f" >>"%logfile%" 2>&1
   )
 )
 
 REM ok bring in the new files
-xcopy "%extractdir%\Quake\*" "%rootpath%" /s /e /c /i /r /k /q /y >"%logfile%" 2>&1
+echo.>>"%logfile%"
+echo "installing new files">>"%logfile%"
+xcopy "%extractdir%\Quake\*" "%rootpath%" /s /e /c /i /r /k /y >>"%logfile%" 2>&1
 
 if %errorlevel% equ 0 (
   echo ... done!
@@ -31,6 +36,8 @@ if %errorlevel% equ 0 (
   cls
   start /b /i cmd /c quakestarter.cmd & exit
 ) else (
+  echo.>>"%logfile%"
+  echo "error in copy!">>"%logfile%"
   echo.
   echo Failed to complete the upgrade.
   echo Some or all of the files in this folder ^(and its quakestarter subfolders^)

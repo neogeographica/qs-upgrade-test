@@ -23,7 +23,7 @@ DOC_SRC_PATH = os.path.join(SRC_PATH, "docsource")
 exec(open(os.path.join(DOC_SRC_PATH, "conf.py")).read())
 RELEASE = release
 
-RELEASE_URL = "https://github.com/neogeographica/qs-upgrade-test/releases/tag/v" + RELEASE
+RELEASE_URL = "https://github.com/neogeographica/quakestarter/releases/tag/v" + RELEASE
 
 RELEASE_FOLDER = "release." + str(os.getpid())
 QUAKE_FOLDER = os.path.join(RELEASE_FOLDER, "Quake")
@@ -118,10 +118,10 @@ def gen_version_config():
     with open(os.path.join(QUAKE_FOLDER, "quakestarter_scripts", "_version_installed.cmd"), 'w', newline='\r\n') as f:
         f.write("set version_installed=" + RELEASE_URL)
 
-def gen_release_manifest():
+def gen_release_manifest(filename):
     files = [f + "\r\n" for f in os.listdir(QUAKE_FOLDER) if f != "id1"]
     files += ["id1\\" + f + "\r\n" for f in os.listdir(os.path.join(QUAKE_FOLDER, "id1"))]
-    with open(os.path.join(QUAKE_FOLDER, "quakestarter_scripts", "release_manifest.txt"), 'w') as f:
+    with open(os.path.join(QUAKE_FOLDER, "quakestarter_scripts", filename), 'w') as f:
         f.writelines(files)
 
 def patch_autoexec():
@@ -234,7 +234,8 @@ def gen_release():
     gen_readme(readme_contents, "", "", sql_timestamp, timestamp)
     release_name = "quakestarter-noengine-" + RELEASE
     patch_autoexec()
-    gen_release_manifest()
+    gen_release_manifest("noengine-manifest.txt")
+    gen_release_manifest("manifest.txt")
     shutil.make_archive(release_name, "zip", root_dir=RELEASE_FOLDER, base_dir=".")
     unpatch_autoexec()
     vkq_timestamp = handle_zip(VKQ_URL, VKQ_LOCALFILE, vkq_staging)
@@ -248,7 +249,7 @@ def gen_release():
     with open(os.path.join(QUAKE_FOLDER, "engines_manifest.txt"), 'w') as f:
         f.writelines(manifest_lines)
     release_name = "quakestarter-" + RELEASE
-    gen_release_manifest()
+    gen_release_manifest("manifest.txt")
     shutil.make_archive(release_name, "zip", root_dir=RELEASE_FOLDER, base_dir=".")
     shutil.rmtree(RELEASE_FOLDER)
     return 0

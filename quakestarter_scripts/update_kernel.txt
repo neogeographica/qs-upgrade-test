@@ -12,7 +12,7 @@ set logfile=%destdir%\update.log
 cd "%rootpath%"
 
 REM best-effort deletion of current files
-echo "removing the following files from %rootpath%">"%logfile%"
+echo removing the following files from %rootpath%>"%logfile%"
 type "%manifest%">>"%logfile%"
 echo.>>"%logfile%"
 for /f "tokens=*" %%f in (%manifest%) do (
@@ -25,7 +25,7 @@ for /f "tokens=*" %%f in (%manifest%) do (
 
 REM ok bring in the new files
 echo.>>"%logfile%"
-echo "installing new files">>"%logfile%"
+echo installing new files>>"%logfile%"
 xcopy "%extractdir%\Quake\*" "%rootpath%" /s /e /c /i /r /k /y >>"%logfile%" 2>&1
 
 if %errorlevel% equ 0 (
@@ -37,7 +37,7 @@ if %errorlevel% equ 0 (
   start /b /i cmd /c quakestarter.cmd & exit
 ) else (
   echo.>>"%logfile%"
-  echo "error in copy!">>"%logfile%"
+  echo error in copy>>"%logfile%"
   echo.
   echo Failed to complete the upgrade.
   echo Some or all of the files in this folder ^(and its quakestarter subfolders^)

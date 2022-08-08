@@ -97,7 +97,7 @@ REM redirect to a page that contains Quakestarter archive download links for
 REM only the most recent version.
 
 set check_for_updates=true
-set update_location=https://github.com/neogeographica/qs-upgrade-test/releases/latest
+set update_location=https://github.com/neogeographica/quakestarter/releases/latest
 set changelog_location=https://neogeographica.com/quakestarter_html/other_stuff/changelog.html
 
 

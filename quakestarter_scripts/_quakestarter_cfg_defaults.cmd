@@ -88,7 +88,7 @@ REM slow to update and a new version of AD/Copper has been released. Note that
 REM this must match the basename of a zip file in the Quaddicted filebase.
 
 set latest_ad=ad_v1_80p1final
-set latest_copper=copper_v1_19
+set latest_copper=copper_v1_20
 
 
 REM Whether to check for updates when starting Quakestarter, and if so what
@@ -97,7 +97,7 @@ REM redirect to a page that contains Quakestarter archive download links for
 REM only the most recent version.
 
 set check_for_updates=true
-set update_location=https://github.com/neogeographica/quakestarter/releases/latest
+set update_location=https://github.com/neogeographica/qs-upgrade-test/releases/latest
 set changelog_location=https://neogeographica.com/quakestarter_html/other_stuff/changelog.html
 
 
